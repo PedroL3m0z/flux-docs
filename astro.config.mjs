@@ -38,6 +38,8 @@ export default defineConfig({
         { label: 'Webhooks', slug: 'webhooks' },
         { label: 'Events', slug: 'events' },
         { label: 'Accounts', slug: 'accounts' },
+        { label: 'API reference', slug: 'api-reference' },
+        { label: 'Types & contracts', slug: 'types' },
       ],
     }),
   ],

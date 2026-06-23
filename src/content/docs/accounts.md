@@ -8,6 +8,11 @@ Telegram [instances](/flux-docs/instances/) they operate. Each account has one
 **role** that decides what it can do. Managing accounts requires the **admin**
 role.
 
+![Users list in the dashboard, annotated](../../assets/screenshots/users-annotated.png)
+
+The **Users** page shows every account with its email, role and creation date;
+admins add and edit users from here.
+
 ## Roles & permissions
 
 | Capability | viewer | operator | admin |
@@ -31,6 +36,10 @@ curl -X POST http://localhost:3000/auth/register \
 
 New users start as `viewer`; promote them with a role change (below).
 
+In the dashboard, **Add user** opens this modal:
+
+![Add user modal, annotated step by step](../../assets/screenshots/user-modal-annotated.png)
+
 ## List, edit, delete
 
 | Action | Route | Notes |
@@ -47,6 +56,11 @@ curl -X PATCH http://localhost:3000/users/<userId>/role \
   -H 'Content-Type: application/json' \
   -d '{"role":"operator"}'
 ```
+
+The row pencil opens an **Edit user** modal covering email, username, password and
+role in one place (you can't change your own role here):
+
+![Edit user modal, annotated step by step](../../assets/screenshots/user-edit-modal-annotated.png)
 
 :::caution[Self-protection]
 You **cannot** change your own role or delete your own account through these

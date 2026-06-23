@@ -7,6 +7,11 @@ An **instance** is one Telegram account managed by Flux. You create it, authoriz
 it once (see [Sessions](/flux-docs/sessions/)), and then use it to read and send
 messages. All routes below require a JWT + API key.
 
+![Instances list in the dashboard, annotated](../../assets/screenshots/instances-annotated.png)
+
+In the dashboard, **Instances** lists every connected account with its engine,
+status and creation date; **Add instance** creates a new one.
+
 ## Create
 
 ```bash
@@ -23,6 +28,11 @@ curl -X POST http://localhost:3000/telegram/instances \
 | `apiId` / `apiHash` | no | Override the global [credentials](/flux-docs/telegram-credentials/) |
 
 The new instance starts in status `new` — it has no Telegram session yet.
+
+In the dashboard, **Add instance** opens this modal — name it, pick an engine and
+choose a login method:
+
+![Add instance modal, annotated step by step](../../assets/screenshots/instance-modal-annotated.png)
 
 ## List, read & inspect
 
@@ -59,6 +69,10 @@ curl http://localhost:3000/telegram/instances/<id>/info -H ...# + live state
 curl -X POST http://localhost:3000/telegram/instances/<id>/start -H ...
 curl -X POST http://localhost:3000/telegram/instances/<id>/stop  -H ...
 ```
+
+Each row in the dashboard exposes the same actions as icon buttons:
+
+![Instance row actions, annotated](../../assets/screenshots/instances-row-annotated.png)
 
 ## Delete
 

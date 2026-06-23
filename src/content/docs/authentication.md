@@ -8,6 +8,11 @@ Two layers protect the API. Most routes require **both**:
 1. **JWT** — identifies the dashboard user. You get it from `POST /auth/login`.
 2. **API key** — the gateway's static key, sent as the `x-api-key` header.
 
+![The Flux dashboard sign-in screen, annotated step by step](../../assets/screenshots/login-annotated.png)
+
+The dashboard does both steps for you: enter the API key to unlock, then sign in
+with your username/email and password.
+
 ## Log in
 
 ```bash

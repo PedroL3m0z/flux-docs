@@ -8,6 +8,11 @@ A **webhook** delivers events to a URL you own. You subscribe it to a subset of
 [instances](/flux-docs/instances/); whenever a matching event happens, Flux POSTs
 it to your endpoint with retries and an HMAC signature.
 
+![Webhooks list in the dashboard, annotated](../../assets/screenshots/webhooks-annotated.png)
+
+The dashboard **Webhooks** page lists each endpoint with its URL, subscribed
+events, linked instances and status; **Add webhook** opens the create form.
+
 ## Create a webhook
 
 ```bash
@@ -25,6 +30,11 @@ curl -X POST http://localhost:3000/webhooks \
 The response includes the signing **`secret`** (prefix `whsec_`) **once** — store
 it now; it is never shown again. List the subscribable types with
 `GET /webhooks/event-types`.
+
+In the dashboard, **Add webhook** opens this modal — name it, set the URL, tick
+the event types and link instances:
+
+![Add webhook modal, annotated step by step](../../assets/screenshots/webhook-modal-annotated.png)
 
 ## Receiving a delivery
 
@@ -85,6 +95,16 @@ function verify(rawBody: string, header: string, secret: string): boolean {
 | Link / unlink an instance | `POST` / `DELETE /webhooks/:id/instances/:instanceId` |
 | Delivery log (`?limit=`, default 50) | `GET /webhooks/:id/deliveries` |
 | Re-queue a delivery now | `POST /webhooks/deliveries/:deliveryId/resend` |
+
+Each row exposes these as icon buttons — toggle active, view deliveries, rotate
+the secret, edit and delete:
+
+![Webhook row actions, annotated](../../assets/screenshots/webhooks-row-annotated.png)
+
+The **Deliveries** button opens a per-webhook log (status, HTTP code, attempts)
+with a manual resend:
+
+![Webhook deliveries modal, annotated](../../assets/screenshots/webhook-deliveries-annotated.png)
 
 :::caution[Public URLs only]
 Webhook URLs that point at localhost, private/reserved IP ranges or cloud

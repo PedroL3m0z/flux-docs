@@ -23,6 +23,10 @@ In `message.read`, `direction: "outbound"` means the recipient read **your**
 message (the classic "seen"); `"inbound"` means you read theirs.
 :::
 
+Each event is delivered in a `DomainEvent` envelope (`instanceId`, `type`, `at`,
+`payload`). The exact payload shape per type is in
+[Types & contracts](/flux-docs/types/#event-payloads).
+
 ## Stream over SSE
 
 Open a Server-Sent Events connection and process each `data` payload as it

@@ -90,3 +90,10 @@ From here, subscribe to [Webhooks](/flux-docs/webhooks/) or stream
 Everything above is also point-and-click at `http://localhost:3000/dashboard`:
 log in, set credentials in **Settings**, create an instance, connect it via QR
 or phone, and open its chats.
+
+![The dashboard Overview page, annotated](../../assets/screenshots/overview-annotated.png)
+
+The **Overview** shows uptime, instance and webhook counts, and service health at
+a glance. The in-app **Help** page walks through the same flow step by step.
+
+![The dashboard step-by-step Help page](../../assets/screenshots/help.png)

@@ -38,6 +38,11 @@ curl http://localhost:3000/telegram/settings \
 You can also set these from the dashboard under **Settings**, or at startup with
 the `TELEGRAM_API_ID` / `TELEGRAM_API_HASH` environment variables.
 
+![Telegram credentials form in the dashboard Settings page, annotated step by step](../../assets/screenshots/settings-annotated.png)
+
+The **Settings** page holds the global `api_id` / `api_hash` and a quick
+`x-api-key` tester. The hash shows as set but is never displayed back.
+
 ## Override per instance
 
 Provide `apiId` / `apiHash` when creating an [instance](/flux-docs/instances/) to
