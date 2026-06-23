@@ -15,7 +15,7 @@ export default defineConfig({
     starlight({
       title: 'Flux API',
       description:
-        'HTTP gateway for Telegram — run accounts as instances behind a clean REST API, realtime SSE and signed webhooks.',
+        'How to use Flux API — an HTTP gateway that runs Telegram accounts as instances behind a REST API, realtime events and webhooks.',
       logo: { src: './src/assets/logo.png', alt: 'Flux API' },
       favicon: '/favicon.svg',
       social: [
@@ -29,30 +29,15 @@ export default defineConfig({
         baseUrl: 'https://github.com/PedroL3m0z/flux-docs/edit/main/',
       },
       sidebar: [
-        {
-          label: 'Start here',
-          items: [
-            { label: 'Introduction', slug: 'guides/introduction' },
-            { label: 'Getting started', slug: 'guides/getting-started' },
-            { label: 'How it works', slug: 'guides/how-it-works' },
-          ],
-        },
-        {
-          label: 'Guides',
-          items: [
-            { label: 'Events', slug: 'guides/events' },
-            { label: 'Webhooks', slug: 'guides/webhooks' },
-            { label: 'Auth & security', slug: 'guides/auth' },
-          ],
-        },
-        {
-          label: 'Reference',
-          items: [
-            { label: 'Endpoints', slug: 'reference/endpoints' },
-            { label: 'Architecture', slug: 'reference/architecture' },
-            { label: 'Configuration', slug: 'reference/configuration' },
-          ],
-        },
+        { label: 'Getting started', slug: 'getting-started' },
+        { label: 'Authentication', slug: 'authentication' },
+        { label: 'Telegram credentials', slug: 'telegram-credentials' },
+        { label: 'Instances', slug: 'instances' },
+        { label: 'Sessions', slug: 'sessions' },
+        { label: 'Engines', slug: 'engines' },
+        { label: 'Webhooks', slug: 'webhooks' },
+        { label: 'Events', slug: 'events' },
+        { label: 'Accounts', slug: 'accounts' },
       ],
     }),
   ],
