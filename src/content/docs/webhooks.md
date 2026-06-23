@@ -43,10 +43,12 @@ And these headers:
 
 | Header | Content |
 | --- | --- |
+| `Content-Type` | `application/json` |
+| `User-Agent` | `Flux-Webhooks/1.0` |
 | `X-Flux-Event` | event type (e.g. `message.new`) |
 | `X-Flux-Delivery` | delivery id — use it for idempotency |
 | `X-Flux-Instance` | source instance id (when applicable) |
-| `X-Flux-Signature` | `sha256=<hmac-hex>` of the raw body |
+| `X-Flux-Signature` | `sha256=<hmac-hex>` of the raw body, using the webhook `secret` |
 
 ## Verify the signature
 
