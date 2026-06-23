@@ -17,7 +17,7 @@ export default defineConfig({
       description:
         'How to use Flux API — an HTTP gateway that runs Telegram accounts as instances behind a REST API, realtime events and webhooks.',
       logo: { src: './src/assets/logo.png', alt: 'Flux API' },
-      favicon: '/icon.svg',
+      favicon: '/icon.png',
       social: [
         {
           icon: 'github',
