@@ -1,0 +1,48 @@
+---
+title: Flux API
+description: HTTP gateway for Telegram — run accounts as instances behind a clean REST API, realtime SSE and signed webhooks.
+template: splash
+hero:
+  tagline: Run Telegram accounts as instances behind a clean REST API, a realtime SSE stream and durable, signed webhooks.
+  image:
+    file: ../../assets/logo.png
+  actions:
+    - text: Get started
+      link: /flux-docs/guides/getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/PedroL3m0z/Flux-Api
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Why Flux
+
+Flux connects one or more Telegram accounts over MTProto and turns each one into an **instance** you manage over HTTP — read chats, send messages and media, and receive every update as realtime events or signed webhooks. Built on **NestJS 11 + Prisma 7 (PostgreSQL) + Redis**, with a **Vue 3 dashboard** to drive it all visually.
+
+<CardGrid stagger>
+  <Card title="Accounts as instances" icon="telegram">
+    Connect via **QR code** or **phone (OTP) + 2FA**. Sessions persist and reconnect automatically across restarts.
+  </Card>
+  <Card title="Clean REST API" icon="open-book">
+    Chats, history, messages and media over HTTP. Interactive OpenAPI reference served at `/docs` (Scalar).
+  </Card>
+  <Card title="Realtime + webhooks" icon="rocket">
+    New/edited/deleted messages, read receipts, reactions and session status — over **SSE** and durable, **HMAC-signed webhooks**.
+  </Card>
+  <Card title="Zero-config boot" icon="setting">
+    No required env vars. Secrets are generated and persisted; an admin is seeded on first boot. `docker compose up` and go.
+  </Card>
+</CardGrid>
+
+## Jump in
+
+<CardGrid>
+  <LinkCard title="Getting started" href="/flux-docs/guides/getting-started/" description="Run the whole stack in one command." />
+  <LinkCard title="How it works" href="/flux-docs/guides/how-it-works/" description="From a Telegram update to your endpoint." />
+  <LinkCard title="Webhooks" href="/flux-docs/guides/webhooks/" description="Subscribe to events with signed, retried delivery." />
+  <LinkCard title="Endpoints" href="/flux-docs/reference/endpoints/" description="The full REST surface at a glance." />
+</CardGrid>
