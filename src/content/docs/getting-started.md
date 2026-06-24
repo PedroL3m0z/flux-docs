@@ -7,11 +7,20 @@ This page takes you from nothing to a connected account sending a message. Each 
 
 ## 1. Run the gateway
 
+The fastest path is the published **all-in-one** image — API + PostgreSQL +
+Redis in a single container, nothing to clone or wire up:
+
 ```bash
-git clone https://github.com/PedroL3m0z/Flux-Api.git
-cd flux-api
-docker compose up -d
+# Docker Hub
+docker run -d -p 3000:3000 -v flux_data:/data pedrooaj/flux-api
+
+# or GitHub Container Registry
+docker run -d -p 3000:3000 -v flux_data:/data ghcr.io/pedrol3m0z/flux-api
 ```
+
+The image is multi-arch (`linux/amd64` + `linux/arm64`) and tagged per release
+(`X.Y.Z`, `X.Y`, `latest`). The `/data` volume persists the database, Redis
+data and the auto-generated secrets — **keep it** across container recreations.
 
 | Surface | URL |
 | --- | --- |
@@ -22,8 +31,21 @@ docker compose up -d
 :::tip[Zero configuration]
 No environment variables are required. On first boot Flux generates strong
 secrets and an initial **admin** user, printing the **API key** and the admin
-**password** to the log **once** — copy them now. They are also stored in
-`data/secrets.json`.
+**password** to the log **once** (`docker logs <container>`) — copy them now.
+They are also persisted under the `/data` volume (`secrets.json`).
+:::
+
+:::note[Scaling out instead?]
+The all-in-one image is built for single-host / self-hosted setups, not
+horizontal scaling — a restart cycles every process. For scalable deployments
+clone the repo and use Docker Compose, which runs the API, Postgres and Redis
+as separate services:
+
+```bash
+git clone https://github.com/PedroL3m0z/Flux-Api.git
+cd flux-api
+docker compose up -d
+```
 :::
 
 ## 2. Log in
