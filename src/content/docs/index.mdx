@@ -18,8 +18,47 @@ hero:
 ---
 
 import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import overview from '../../assets/screenshots/overview-annotated.png';
 
 Flux turns one or more Telegram accounts into **instances** you drive over HTTP — authenticate, read and send messages, and receive every update as realtime events or signed webhooks. This guide walks through everything you can do, feature by feature.
+
+## Why Flux
+
+<CardGrid>
+  <Card title="Open source" icon="github">
+    Apache-2.0, code on GitHub. Read it, fork it, run it — no black box, no vendor lock-in.
+  </Card>
+  <Card title="Self-hosted" icon="setting">
+    Your accounts, your server, your data. One container with Postgres + Redis built in, or scale out with Compose.
+  </Card>
+  <Card title="REST API" icon="list-format">
+    Every Telegram action is a plain HTTP endpoint with an OpenAPI spec and interactive Scalar docs at `/docs`.
+  </Card>
+  <Card title="Simple & easy" icon="rocket">
+    Zero-config boot — `docker run` and go. Secrets and the admin user are generated for you on first start.
+  </Card>
+  <Card title="Webhooks" icon="random">
+    Receive every event on your own endpoint — signed (HMAC), retried with backoff, with a full delivery log.
+  </Card>
+</CardGrid>
+
+## See it
+
+A Vue dashboard ships with the gateway — manage instances, sessions, webhooks and users without touching the API:
+
+<Image src={overview} alt="Flux dashboard Overview: uptime, instance and webhook counts, and service health" />
+
+Prefer code? The same things are one HTTP call away:
+
+```bash
+# Send a message from an authorized instance
+curl -X POST \
+  http://localhost:3000/telegram/instances/<id>/chats/<chatId>/messages \
+  -H 'Authorization: Bearer <JWT>' -H 'x-api-key: <API_KEY>' \
+  -H 'Content-Type: application/json' \
+  -d '{"text":"Hello from Flux"}'
+```
 
 ## Find your way
 
