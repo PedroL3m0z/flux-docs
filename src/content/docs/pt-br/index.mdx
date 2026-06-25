@@ -17,7 +17,7 @@ hero:
       variant: minimal
 ---
 
-import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { Card, CardGrid } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
 import overview from '../../../assets/screenshots/overview-annotated.png';
 
@@ -74,17 +74,15 @@ curl -X POST \
 
 ## Navegue pela documentação
 
-<CardGrid>
-  <LinkCard title="Primeiros passos" href="/flux-docs/pt-br/getting-started/" description="Suba a Flux e conecte sua primeira conta em minutos." />
-  <LinkCard title="Como funciona" href="/flux-docs/pt-br/how-it-works/" description="Acompanhe uma atualização do Telegram do MTProto até seu endpoint." />
-  <LinkCard title="Autenticação" href="/flux-docs/pt-br/authentication/" description="Faça login, obtenha um JWT e envie a API key em cada requisição." />
-  <LinkCard title="Credenciais do Telegram" href="/flux-docs/pt-br/telegram-credentials/" description="Defina o api_id / api_hash que alimentam a camada do Telegram." />
-  <LinkCard title="Instâncias" href="/flux-docs/pt-br/instances/" description="Crie, inicie, pare e use instâncias do Telegram." />
-  <LinkCard title="Sessões" href="/flux-docs/pt-br/sessions/" description="Autorize uma conta via QR ou telefone + 2FA." />
-  <LinkCard title="Webhooks" href="/flux-docs/pt-br/webhooks/" description="Receba eventos no seu endpoint, assinados e com retentativas." />
-  <LinkCard title="Eventos" href="/flux-docs/pt-br/events/" description="Os tipos de evento e como consumi-los via SSE." />
-  <LinkCard title="Contas" href="/flux-docs/pt-br/accounts/" description="Gerencie os usuários do dashboard e seus papéis." />
-  <LinkCard title="Referência da API" href="/flux-docs/pt-br/api-reference/" description="Todos os endpoints em tabelas, mais as docs interativas (Scalar)." />
-  <LinkCard title="Tipos e contratos" href="/flux-docs/pt-br/types/" description="Views de resposta, enums, payloads de evento e corpos das rotas de envio." />
-  <LinkCard title="Contribuindo" href="/flux-docs/pt-br/contributing/" description="Configure o repo, crie uma branch e abra um PR que entra limpo." />
-</CardGrid>
+[Primeiros passos](/flux-docs/pt-br/getting-started/) ·
+[Como funciona](/flux-docs/pt-br/how-it-works/) ·
+[Autenticação](/flux-docs/pt-br/authentication/) ·
+[Credenciais do Telegram](/flux-docs/pt-br/telegram-credentials/) ·
+[Instâncias](/flux-docs/pt-br/instances/) ·
+[Sessões](/flux-docs/pt-br/sessions/) ·
+[Webhooks](/flux-docs/pt-br/webhooks/) ·
+[Eventos](/flux-docs/pt-br/events/) ·
+[Contas](/flux-docs/pt-br/accounts/) ·
+[Referência da API](/flux-docs/pt-br/api-reference/) ·
+[Tipos e contratos](/flux-docs/pt-br/types/) ·
+[Contribuindo](/flux-docs/pt-br/contributing/)
