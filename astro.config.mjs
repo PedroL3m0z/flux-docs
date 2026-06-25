@@ -36,6 +36,7 @@ export default defineConfig({
       },
       sidebar: [
         { label: 'Getting started', translations: { 'pt-BR': 'Primeiros passos' }, slug: 'getting-started' },
+        { label: 'How it works', translations: { 'pt-BR': 'Como funciona' }, slug: 'how-it-works' },
         { label: 'Authentication', translations: { 'pt-BR': 'Autenticação' }, slug: 'authentication' },
         { label: 'Telegram credentials', translations: { 'pt-BR': 'Credenciais do Telegram' }, slug: 'telegram-credentials' },
         { label: 'Instances', translations: { 'pt-BR': 'Instâncias' }, slug: 'instances' },
