@@ -55,6 +55,29 @@ Flux turns one or more Telegram accounts into **instances** you drive over HTTP 
   </Card>
 </CardGrid>
 
+## What you can do
+
+<CardGrid>
+  <Card title="Run many accounts" icon="laptop">
+    Each Telegram number is an **instance** with its own session. Create, start, stop and operate them independently from one gateway.
+  </Card>
+  <Card title="Read & send messages" icon="comment">
+    List chats, page through history, send text (up to 4096 chars) and media — photos, videos and documents up to 50 MB — over plain HTTP.
+  </Card>
+  <Card title="Realtime events" icon="bars">
+    New messages, edits, deletes, read receipts, reactions and status changes stream live over SSE — no polling.
+  </Card>
+  <Card title="Signed webhooks" icon="random">
+    Subscribe your endpoint to any subset of events. Deliveries are HMAC-signed, stored in a Postgres outbox and retried with backoff.
+  </Card>
+  <Card title="Roles & access" icon="approve-check">
+    Dashboard accounts with **admin / operator / viewer** roles decide who can read, operate instances or manage users.
+  </Card>
+  <Card title="Secure by default" icon="seti:lock">
+    Argon2id passwords, constant-time API-key checks, AES-256-GCM session encryption, rate limiting and SSRF-guarded webhook URLs.
+  </Card>
+</CardGrid>
+
 ## See it
 
 A Vue dashboard ships with the gateway — manage instances, sessions, webhooks and users without touching the API:
@@ -72,17 +95,36 @@ curl -X POST \
   -d '{"text":"Hello from Flux"}'
 ```
 
-## Find your way
+## Up and running in one command
 
-[Getting started](/flux-docs/getting-started/) ·
-[How it works](/flux-docs/how-it-works/) ·
-[Authentication](/flux-docs/authentication/) ·
-[Telegram credentials](/flux-docs/telegram-credentials/) ·
-[Instances](/flux-docs/instances/) ·
-[Sessions](/flux-docs/sessions/) ·
-[Webhooks](/flux-docs/webhooks/) ·
-[Events](/flux-docs/events/) ·
-[Accounts](/flux-docs/accounts/) ·
-[API reference](/flux-docs/api-reference/) ·
-[Types & contracts](/flux-docs/types/) ·
-[Contributing](/flux-docs/contributing/)
+The published all-in-one image bundles the API, PostgreSQL and Redis — no setup, no config:
+
+```bash
+docker run -d -p 3000:3000 -v flux_data:/data pedrooaj/flux-api
+```
+
+Then open the dashboard at `http://localhost:3000/dashboard`, or the interactive
+API docs at `/docs`. Full walkthrough in [Getting started](/flux-docs/getting-started/);
+the request-to-endpoint flow is in [How it works](/flux-docs/how-it-works/).
+
+Built on **NestJS 11 + Prisma 7 (PostgreSQL) + Redis**, with a **Vue 3** dashboard.
+
+<footer style="margin-top:3.5rem; padding-top:1.5rem; border-top:1px solid var(--sl-color-gray-5); text-align:center; font-size:0.875rem;">
+  <p style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.4rem 0.9rem; margin:0;">
+    <a href="/flux-docs/getting-started/">Getting started</a>
+    <a href="/flux-docs/how-it-works/">How it works</a>
+    <a href="/flux-docs/authentication/">Authentication</a>
+    <a href="/flux-docs/telegram-credentials/">Telegram credentials</a>
+    <a href="/flux-docs/instances/">Instances</a>
+    <a href="/flux-docs/sessions/">Sessions</a>
+    <a href="/flux-docs/webhooks/">Webhooks</a>
+    <a href="/flux-docs/events/">Events</a>
+    <a href="/flux-docs/accounts/">Accounts</a>
+    <a href="/flux-docs/api-reference/">API reference</a>
+    <a href="/flux-docs/types/">Types &amp; contracts</a>
+    <a href="/flux-docs/contributing/">Contributing</a>
+  </p>
+  <p style="margin-top:1.25rem; color:var(--sl-color-gray-3);">
+    Flux API · Apache-2.0 · <a href="https://github.com/PedroL3m0z/Flux-Api">GitHub</a> · <a href="https://hub.docker.com/r/pedrooaj/flux-api">Docker Hub</a>
+  </p>
+</footer>
