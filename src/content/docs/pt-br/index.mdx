@@ -57,26 +57,11 @@ A Flux transforma uma ou mais contas do Telegram em **instâncias** que você co
 
 ## O que dá para fazer
 
-<CardGrid>
-  <Card title="Rode várias contas" icon="laptop">
-    Cada número do Telegram é uma **instância** com sua própria sessão. Crie, inicie, pare e opere todas de forma independente num só gateway.
-  </Card>
-  <Card title="Leia e envie mensagens" icon="comment">
-    Liste chats, navegue pelo histórico, envie texto (até 4096 caracteres) e mídia — fotos, vídeos e documentos até 50 MB — por HTTP simples.
-  </Card>
-  <Card title="Eventos em tempo real" icon="bars">
-    Novas mensagens, edições, exclusões, recibos de leitura, reações e mudanças de status via SSE ao vivo — sem polling.
-  </Card>
-  <Card title="Webhooks assinados" icon="random">
-    Assine seu endpoint em qualquer subconjunto de eventos. Entregas com assinatura HMAC, guardadas num outbox no Postgres e com retentativa e backoff.
-  </Card>
-  <Card title="Papéis e acesso" icon="approve-check">
-    Contas do dashboard com papéis **admin / operator / viewer** decidem quem pode ler, operar instâncias ou gerenciar usuários.
-  </Card>
-  <Card title="Seguro por padrão" icon="seti:lock">
-    Senhas Argon2id, checagem de API key em tempo constante, criptografia de sessão AES-256-GCM, rate limiting e URLs de webhook protegidas contra SSRF.
-  </Card>
-</CardGrid>
+- **Rode várias contas** — cada número do Telegram é uma [instância](/flux-docs/pt-br/instances/) com sua própria sessão, operada de forma independente num só gateway.
+- **Leia e envie mensagens** — liste chats, navegue pelo histórico, envie texto e mídia (fotos, vídeos, documentos até 50 MB) por HTTP simples.
+- **Reaja em tempo real** — novas mensagens, edições, exclusões, recibos de leitura, reações e mudanças de status via [SSE](/flux-docs/pt-br/events/) ao vivo, sem polling.
+- **Receba webhooks assinados** — assine seu endpoint em qualquer subconjunto de eventos; entregas com assinatura HMAC, guardadas num outbox no Postgres e [com retentativa e backoff](/flux-docs/pt-br/webhooks/).
+- **Controle o acesso** — [contas](/flux-docs/pt-br/accounts/) do dashboard com papéis admin / operator / viewer, senhas Argon2id, sessões criptografadas e URLs de webhook protegidas contra SSRF.
 
 ## Veja na prática
 

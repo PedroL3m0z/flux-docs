@@ -57,26 +57,11 @@ Flux turns one or more Telegram accounts into **instances** you drive over HTTP 
 
 ## What you can do
 
-<CardGrid>
-  <Card title="Run many accounts" icon="laptop">
-    Each Telegram number is an **instance** with its own session. Create, start, stop and operate them independently from one gateway.
-  </Card>
-  <Card title="Read & send messages" icon="comment">
-    List chats, page through history, send text (up to 4096 chars) and media — photos, videos and documents up to 50 MB — over plain HTTP.
-  </Card>
-  <Card title="Realtime events" icon="bars">
-    New messages, edits, deletes, read receipts, reactions and status changes stream live over SSE — no polling.
-  </Card>
-  <Card title="Signed webhooks" icon="random">
-    Subscribe your endpoint to any subset of events. Deliveries are HMAC-signed, stored in a Postgres outbox and retried with backoff.
-  </Card>
-  <Card title="Roles & access" icon="approve-check">
-    Dashboard accounts with **admin / operator / viewer** roles decide who can read, operate instances or manage users.
-  </Card>
-  <Card title="Secure by default" icon="seti:lock">
-    Argon2id passwords, constant-time API-key checks, AES-256-GCM session encryption, rate limiting and SSRF-guarded webhook URLs.
-  </Card>
-</CardGrid>
+- **Run many accounts** — each Telegram number is an [instance](/flux-docs/instances/) with its own session, operated independently from one gateway.
+- **Read & send messages** — list chats, page through history, send text and media (photos, videos, documents up to 50 MB) over plain HTTP.
+- **React in realtime** — new messages, edits, deletes, read receipts, reactions and status changes stream live over [SSE](/flux-docs/events/), no polling.
+- **Get signed webhooks** — subscribe your endpoint to any subset of events; deliveries are HMAC-signed, stored in a Postgres outbox and [retried with backoff](/flux-docs/webhooks/).
+- **Control access** — dashboard [accounts](/flux-docs/accounts/) with admin / operator / viewer roles, Argon2id passwords, encrypted sessions and SSRF-guarded webhook URLs.
 
 ## See it
 
