@@ -75,49 +75,19 @@ Each row exposes, as icon buttons: **info** (live state), **open chats**,
 
 ## Chats, messages & media
 
-Once an instance is `authorized`:
-
-### In the dashboard
-
-Open the instance to browse chats and contacts, read paginated history, and send
-text or media (photos, videos, documents up to 50 MB). Incoming messages appear
-live.
-
-### Via the API
+Once an instance is `authorized` you can browse chats and contacts, read
+paginated history, and send text or media (photos, videos, documents up to
+50 MB) — in the dashboard, or over the API. The full walkthrough with worked
+requests and response shapes is in **[Messaging](/flux-docs/messaging/)**:
 
 | Action | Route | Method |
 | --- | --- | --- |
 | List chats | `/telegram/instances/:id/chats` | GET |
-| List history | `/telegram/instances/:id/chats/:chatId/messages` | GET |
+| Read history | `/telegram/instances/:id/chats/:chatId/messages` | GET |
 | Send text | `/telegram/instances/:id/chats/:chatId/messages` | POST |
 | Send media | `/telegram/instances/:id/chats/:chatId/media` | POST |
 | Download attachment | `…/chats/:chatId/messages/:messageId/media` | GET |
 | Chat / contact avatar | `…/chats/:chatId/photo`, `…/contacts/:contactId/photo` | GET |
-
-**List history** — query parameters:
-
-| Param | Type | Required | Description |
-| --- | --- | :---: | --- |
-| `cursor` | string | no | Oldest `tgMessageId` you received; pages backwards |
-| `limit` | number | no | Page size |
-
-**Send a text message** — body:
-
-| Field | Type | Required | Rules | Description |
-| --- | --- | :---: | --- | --- |
-| `text` | string | yes | 1–4096 chars | Message body |
-
-**Send media** — `multipart/form-data`:
-
-| Part | Type | Required | Rules | Description |
-| --- | --- | :---: | --- | --- |
-| `file` | file | yes | ≤ 50 MB | Photo, video or document |
-| `caption` | string | no | ≤ 1024 chars | Optional caption |
-
-Responses use `ChatView` / `MessageView` / `MediaView` — full shapes in
-[Types & contracts](/flux-docs/types/). Media bytes are **downloaded lazily**: a
-message carries only `media` metadata; fetch the bytes from the attachment route
-when needed.
 
 To react to incoming messages, stream [Events](/flux-docs/events/) or subscribe a
 [Webhook](/flux-docs/webhooks/). For an account-wide view, `GET /telegram/stats`

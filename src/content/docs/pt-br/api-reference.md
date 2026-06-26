@@ -80,7 +80,9 @@ os fluxos, e o modal **Add instance**:
 | `/telegram/instances/:id/contacts/:contactId/photo` | GET | Avatar do contato (bytes) |
 | `/telegram/instances/:id/chats/:chatId/messages/:messageId/media` | GET | Anexo da mensagem (bytes, download sob demanda) |
 
-Os **formatos** de request/response disso estão em [Tipos e contratos](/flux-docs/pt-br/types/).
+Requisições prontas e formatos de resposta disso estão em
+[Mensagens](/flux-docs/pt-br/messaging/); os tipos crus em
+[Tipos e contratos](/flux-docs/pt-br/types/).
 
 ## Webhooks
 

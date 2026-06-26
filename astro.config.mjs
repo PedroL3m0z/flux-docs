@@ -41,6 +41,7 @@ export default defineConfig({
         { label: 'Telegram credentials', translations: { 'pt-BR': 'Credenciais do Telegram' }, slug: 'telegram-credentials' },
         { label: 'Instances', translations: { 'pt-BR': 'Instâncias' }, slug: 'instances' },
         { label: 'Sessions', translations: { 'pt-BR': 'Sessões' }, slug: 'sessions' },
+        { label: 'Messaging', translations: { 'pt-BR': 'Mensagens' }, slug: 'messaging' },
         { label: 'Engines', translations: { 'pt-BR': 'Engines' }, slug: 'engines' },
         { label: 'Webhooks', translations: { 'pt-BR': 'Webhooks' }, slug: 'webhooks' },
         { label: 'Events', translations: { 'pt-BR': 'Eventos' }, slug: 'events' },

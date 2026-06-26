@@ -75,49 +75,20 @@ Cada linha expõe, como botões de ícone: **info** (estado ao vivo), **abrir ch
 
 ## Chats, mensagens e mídia
 
-Uma vez que a instância esteja `authorized`:
-
-### No dashboard
-
-Abra a instância para navegar por chats e contatos, ler o histórico paginado, e
-enviar texto ou mídia (fotos, vídeos, documentos até 50 MB). Mensagens recebidas
-aparecem ao vivo.
-
-### Pela API
+Uma vez que a instância esteja `authorized` você pode navegar por chats e
+contatos, ler o histórico paginado, e enviar texto ou mídia (fotos, vídeos,
+documentos até 50 MB) — no dashboard, ou pela API. O passo a passo completo com
+requisições prontas e formatos de resposta está em
+**[Mensagens](/flux-docs/pt-br/messaging/)**:
 
 | Ação | Rota | Método |
 | --- | --- | --- |
 | Listar chats | `/telegram/instances/:id/chats` | GET |
-| Listar histórico | `/telegram/instances/:id/chats/:chatId/messages` | GET |
+| Ler histórico | `/telegram/instances/:id/chats/:chatId/messages` | GET |
 | Enviar texto | `/telegram/instances/:id/chats/:chatId/messages` | POST |
 | Enviar mídia | `/telegram/instances/:id/chats/:chatId/media` | POST |
 | Baixar anexo | `…/chats/:chatId/messages/:messageId/media` | GET |
 | Avatar de chat / contato | `…/chats/:chatId/photo`, `…/contacts/:contactId/photo` | GET |
-
-**Listar histórico** — query parameters:
-
-| Param | Tipo | Obrigatório | Descrição |
-| --- | --- | :---: | --- |
-| `cursor` | string | não | `tgMessageId` mais antigo que você recebeu; pagina para trás |
-| `limit` | number | não | Tamanho da página |
-
-**Enviar uma mensagem de texto** — corpo:
-
-| Campo | Tipo | Obrigatório | Regras | Descrição |
-| --- | --- | :---: | --- | --- |
-| `text` | string | sim | 1–4096 caracteres | Corpo da mensagem |
-
-**Enviar mídia** — `multipart/form-data`:
-
-| Parte | Tipo | Obrigatório | Regras | Descrição |
-| --- | --- | :---: | --- | --- |
-| `file` | file | sim | ≤ 50 MB | Foto, vídeo ou documento |
-| `caption` | string | não | ≤ 1024 caracteres | Legenda opcional |
-
-As respostas usam `ChatView` / `MessageView` / `MediaView` — formatos completos em
-[Tipos e contratos](/flux-docs/pt-br/types/). Os bytes de mídia são **baixados sob
-demanda**: uma mensagem carrega só os metadados de `media`; busque os bytes na rota
-do anexo quando precisar.
 
 Para reagir a mensagens recebidas, consuma [Eventos](/flux-docs/pt-br/events/) ou assine um
 [Webhook](/flux-docs/pt-br/webhooks/). Para uma visão da conta toda, `GET /telegram/stats`

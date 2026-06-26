@@ -80,7 +80,9 @@ the flows, and the **Add instance** modal:
 | `/telegram/instances/:id/contacts/:contactId/photo` | GET | Contact avatar (bytes) |
 | `/telegram/instances/:id/chats/:chatId/messages/:messageId/media` | GET | Message attachment (bytes, lazy download) |
 
-Request/response **shapes** for these are in [Types & contracts](/flux-docs/types/).
+Worked requests and response shapes for these are in
+[Messaging](/flux-docs/messaging/); the raw types in
+[Types & contracts](/flux-docs/types/).
 
 ## Webhooks
 
