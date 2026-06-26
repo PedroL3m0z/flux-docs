@@ -26,14 +26,33 @@ docker run -d -p 3000:3000 -v flux_data:/data ghcr.io/pedrol3m0z/flux-api
 ```
 
   </TabItem>
-  <TabItem label="Docker Compose">
+  <TabItem label="docker-compose.yml">
 
-Clone the repo and let `docker-compose.yml` run the same image with the `/data`
-volume wired up:
+Write your own `docker-compose.yml` pointing at the published image, with a named
+volume for `/data`. Set credentials inline (or leave them out to auto-generate):
+
+```yaml
+# docker-compose.yml
+services:
+  flux:
+    image: pedrooaj/flux-api
+    ports:
+      - "3000:3000"
+    volumes:
+      - flux_data:/data
+    environment:
+      SEED_USERNAME: admin
+      SEED_PASSWORD: ch4nge-me
+      API_KEY: my-api-key
+    restart: unless-stopped
+
+volumes:
+  flux_data:
+```
+
+Then bring it up:
 
 ```bash
-git clone https://github.com/PedroL3m0z/Flux-Api.git
-cd flux-api
 docker compose up -d
 ```
 
@@ -58,6 +77,54 @@ secrets and an initial **admin** user, printing the **API key** and the admin
 **password** to the log **once** (`docker logs <container>`) — copy them now.
 They are also persisted under the `/data` volume (`secrets.json`).
 :::
+
+### Set your own credentials (optional)
+
+Rather than copy auto-generated values from the log, you can choose the admin
+**username**, **password** and **API key** up front with environment variables.
+Anything left empty is still auto-generated.
+
+| Variable | Sets | Default if empty |
+| --- | --- | --- |
+| `SEED_USERNAME` | admin login username | `admin` |
+| `SEED_PASSWORD` | admin login password | generated, printed to log once |
+| `SEED_EMAIL` | admin email | generated |
+| `API_KEY` | the `x-api-key` value | generated, printed to log once |
+
+<Tabs>
+  <TabItem label="docker run">
+
+Pass them with `-e`:
+
+```bash
+docker run -d -p 3000:3000 -v flux_data:/data \
+  -e SEED_USERNAME=admin \
+  -e SEED_PASSWORD='ch4nge-me' \
+  -e API_KEY='my-api-key' \
+  pedrooaj/flux-api
+```
+
+  </TabItem>
+  <TabItem label="Docker Compose">
+
+Put them in a `.env` next to `docker-compose.yml` (it reads the file
+automatically):
+
+```bash
+# .env
+SEED_USERNAME=admin
+SEED_PASSWORD=ch4nge-me
+API_KEY=my-api-key
+```
+
+  </TabItem>
+</Tabs>
+
+These seed the **first** boot only — they create the admin user and secrets and
+are then persisted under `/data` (`secrets.json`). Changing them later does
+**not** rewrite an existing account; reset by clearing the volume or changing the
+password in the dashboard. Treat `SEED_PASSWORD` / `API_KEY` as secrets — don't
+commit them.
 
 ## 2. Log in
 

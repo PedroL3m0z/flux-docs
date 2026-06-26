@@ -26,14 +26,34 @@ docker run -d -p 3000:3000 -v flux_data:/data ghcr.io/pedrol3m0z/flux-api
 ```
 
   </TabItem>
-  <TabItem label="Docker Compose">
+  <TabItem label="docker-compose.yml">
 
-Clone o repo e deixe o `docker-compose.yml` rodar a mesma imagem com o volume
-`/data` já configurado:
+Escreva seu próprio `docker-compose.yml` apontando para a imagem publicada, com
+um volume nomeado para `/data`. Defina as credenciais inline (ou deixe de fora
+para gerar automaticamente):
+
+```yaml
+# docker-compose.yml
+services:
+  flux:
+    image: pedrooaj/flux-api
+    ports:
+      - "3000:3000"
+    volumes:
+      - flux_data:/data
+    environment:
+      SEED_USERNAME: admin
+      SEED_PASSWORD: ch4nge-me
+      API_KEY: my-api-key
+    restart: unless-stopped
+
+volumes:
+  flux_data:
+```
+
+Depois suba:
 
 ```bash
-git clone https://github.com/PedroL3m0z/Flux-Api.git
-cd flux-api
 docker compose up -d
 ```
 
@@ -55,6 +75,53 @@ ideal para single-host / self-hosting.
 :::tip[Configuração zero]
 Nenhuma variável de ambiente é necessária. No primeiro boot a Flux gera segredos fortes e um usuário **admin** inicial, imprimindo a **API key** e a **senha** do admin no log **uma única vez** (`docker logs <container>`) — copie agora. Eles também ficam persistidos no volume `/data` (`secrets.json`).
 :::
+
+### Defina suas próprias credenciais (opcional)
+
+Em vez de copiar os valores gerados do log, você pode escolher o **usuário**, a
+**senha** do admin e a **API key** de antemão com variáveis de ambiente. O que
+ficar vazio continua sendo gerado automaticamente.
+
+| Variável | Define | Padrão se vazio |
+| --- | --- | --- |
+| `SEED_USERNAME` | usuário de login do admin | `admin` |
+| `SEED_PASSWORD` | senha de login do admin | gerada, impressa no log uma vez |
+| `SEED_EMAIL` | email do admin | gerado |
+| `API_KEY` | o valor do `x-api-key` | gerada, impressa no log uma vez |
+
+<Tabs>
+  <TabItem label="docker run">
+
+Passe com `-e`:
+
+```bash
+docker run -d -p 3000:3000 -v flux_data:/data \
+  -e SEED_USERNAME=admin \
+  -e SEED_PASSWORD='ch4nge-me' \
+  -e API_KEY='my-api-key' \
+  pedrooaj/flux-api
+```
+
+  </TabItem>
+  <TabItem label="Docker Compose">
+
+Coloque num `.env` ao lado do `docker-compose.yml` (ele lê o arquivo
+automaticamente):
+
+```bash
+# .env
+SEED_USERNAME=admin
+SEED_PASSWORD=ch4nge-me
+API_KEY=my-api-key
+```
+
+  </TabItem>
+</Tabs>
+
+Eles semeiam **apenas** o primeiro boot — criam o usuário admin e os segredos e
+depois ficam persistidos em `/data` (`secrets.json`). Mudá-los depois **não**
+reescreve uma conta existente; para resetar, limpe o volume ou troque a senha no
+dashboard. Trate `SEED_PASSWORD` / `API_KEY` como segredos — não os commite.
 
 ## 2. Faça login
 
