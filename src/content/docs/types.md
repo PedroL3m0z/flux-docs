@@ -102,6 +102,7 @@ interface WebhookView {
   name: string;
   url: string;
   active: boolean;
+  allowInternal: boolean;    // deliver to private/loopback targets (default false)
   events: string[];          // subscribed event types
   instanceIds: string[];     // linked instances (M2M)
   createdAt: string;
@@ -121,6 +122,8 @@ interface WebhookDeliveryView {
   attempts: number;
   statusCode?: number;
   lastError?: string;
+  responseBody?: string;     // target's response, truncated to ~2000 chars
+  nextAttemptAt: string;     // when the next retry is due (while pending/failed)
   createdAt: string;
   deliveredAt?: string;
 }

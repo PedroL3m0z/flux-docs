@@ -89,10 +89,10 @@ Requisições prontas e formatos de resposta disso estão em
 | Rota | Método | Descrição |
 | --- | --- | --- |
 | `/webhooks/event-types` | GET | Lista os tipos de evento assináveis |
-| `/webhooks` | POST | Cria um webhook (retorna o `secret` **uma vez**) |
+| `/webhooks` | POST | Cria um webhook (`name`, `url`, `events`, `instanceIds?`, `allowInternal?`); retorna o `secret` **uma vez** |
 | `/webhooks` | GET | Lista seus webhooks |
 | `/webhooks/:id` | GET | Um webhook |
-| `/webhooks/:id` | PATCH | Atualiza (`name?`, `url?`, `active?`, `events?`) |
+| `/webhooks/:id` | PATCH | Atualiza (`name?`, `url?`, `active?`, `events?`, `allowInternal?`) |
 | `/webhooks/:id` | DELETE | Remove o webhook e suas entregas |
 | `/webhooks/:id/regenerate-secret` | POST | Rotaciona o secret de assinatura (retornado uma vez) |
 | `/webhooks/:id/instances/:instanceId` | POST | Vincula uma instância (M2M) |

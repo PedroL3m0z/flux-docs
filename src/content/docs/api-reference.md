@@ -89,10 +89,10 @@ Worked requests and response shapes for these are in
 | Route | Method | Description |
 | --- | --- | --- |
 | `/webhooks/event-types` | GET | List the subscribable event types |
-| `/webhooks` | POST | Create a webhook (returns the `secret` **once**) |
+| `/webhooks` | POST | Create a webhook (`name`, `url`, `events`, `instanceIds?`, `allowInternal?`); returns the `secret` **once** |
 | `/webhooks` | GET | List your webhooks |
 | `/webhooks/:id` | GET | One webhook |
-| `/webhooks/:id` | PATCH | Update (`name?`, `url?`, `active?`, `events?`) |
+| `/webhooks/:id` | PATCH | Update (`name?`, `url?`, `active?`, `events?`, `allowInternal?`) |
 | `/webhooks/:id` | DELETE | Remove the webhook and its deliveries |
 | `/webhooks/:id/regenerate-secret` | POST | Rotate the signing secret (returned once) |
 | `/webhooks/:id/instances/:instanceId` | POST | Link an instance (M2M) |

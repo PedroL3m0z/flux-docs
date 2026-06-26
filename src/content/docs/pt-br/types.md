@@ -102,6 +102,7 @@ interface WebhookView {
   name: string;
   url: string;
   active: boolean;
+  allowInternal: boolean;    // entrega a destinos privados/loopback (padrão false)
   events: string[];          // tipos de evento assinados
   instanceIds: string[];     // instâncias vinculadas (M2M)
   createdAt: string;
@@ -121,6 +122,8 @@ interface WebhookDeliveryView {
   attempts: number;
   statusCode?: number;
   lastError?: string;
+  responseBody?: string;     // resposta do destino, truncada a ~2000 chars
+  nextAttemptAt: string;     // quando a próxima retentativa está marcada (enquanto pending/failed)
   createdAt: string;
   deliveredAt?: string;
 }

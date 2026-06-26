@@ -19,7 +19,9 @@ faz POST dele no seu endpoint com retentativas e uma assinatura HMAC.
 1. **Webhooks → Add webhook**.
 2. Defina um **nome** e sua **URL**, marque os **tipos de evento**, vincule as
    **instâncias** a escutar.
-3. **Create** — o **secret** de assinatura é mostrado **uma vez**; copie agora.
+3. Escolha o **escopo do destino** — **External** (internet pública, padrão) ou
+   **Internal** (um endereço privado/loopback na mesma rede).
+4. **Create** — o **secret** de assinatura é mostrado **uma vez**; copie agora.
 
 ### Pela API
 
@@ -31,6 +33,7 @@ faz POST dele no seu endpoint com retentativas e uma assinatura HMAC.
 | `url` | string | sim | URL válida | Onde as entregas são enviadas via POST |
 | `events` | string[] | sim | não vazio; cada um um [tipo de evento](/flux-docs/pt-br/events/) válido | Quais eventos enviar |
 | `instanceIds` | string[] | não | ids de instância | Instâncias a escutar (vincule depois se omitido) |
+| `allowInternal` | boolean | não | padrão `false` | Permite um destino **privado/loopback** (mesma rede Docker / LAN) — veja [Escopo do destino](#escopo-do-destino-external-vs-internal) |
 
 ```json
 // POST /webhooks
@@ -38,7 +41,8 @@ faz POST dele no seu endpoint com retentativas e uma assinatura HMAC.
   "name": "Minha integração",
   "url": "https://example.com/hooks/flux",
   "events": ["message.new", "message.read"],
-  "instanceIds": ["<instanceId>"]
+  "instanceIds": ["<instanceId>"],
+  "allowInternal": false
 }
 ```
 
@@ -89,8 +93,10 @@ function verify(rawBody: string, header: string, secret: string): boolean {
 
 - **Durável** — toda tentativa é armazenada, sobrevivendo a restarts.
 - **Retentativa com backoff** — `10s → 1m → 5m → 30m → 2h`; após **6 tentativas** uma
-  entrega é marcada como `dead`.
-- **Auditável** — inspecione o log e reenvie manualmente.
+  entrega é marcada como `dead`. Cada registro expõe `nextAttemptAt`.
+- **Auditável** — cada entrega captura o **corpo da resposta** do destino (um
+  trecho truncado, até 2000 chars) e o último erro; inspecione o log e reenvie
+  manualmente.
 
 ## Gerencie
 
@@ -100,7 +106,8 @@ function verify(rawBody: string, header: string, secret: string): boolean {
 
 Cada linha: alternar **active**, ver **deliveries**, **rotacionar secret**, **editar**,
 **excluir**. O log de entregas mostra status, código HTTP e tentativas, com reenvio
-manual:
+manual; uma entrega que falhou auto-expande um painel de detalhe com o **erro**, o
+**corpo da resposta** do destino e o **horário da próxima tentativa**:
 
 ![Modal de entregas do webhook, anotado](../../../assets/screenshots/webhook-deliveries-annotated.png)
 
@@ -126,9 +133,22 @@ manual:
 | `url` | string | URL válida | Trocar o endpoint |
 | `active` | boolean | — | Habilitar/desabilitar entrega |
 | `events` | string[] | tipos de evento válidos | Substituir a assinatura |
+| `allowInternal` | boolean | — | Alternar destinos privados/loopback (veja abaixo) |
 
-:::caution[Apenas URLs públicas]
-URLs apontando para localhost, faixas de IP privadas/reservadas ou metadados de
-nuvem são rejeitadas na criação/atualização, e reverificadas (com resolução DNS)
-antes de cada entrega. Use uma URL HTTPS publicamente acessível.
+## Escopo do destino (External vs Internal)
+
+Por padrão um webhook é **External**: URLs apontando para localhost, faixas de IP
+privadas ou reservadas são **rejeitadas** na criação/atualização e reverificadas
+(com resolução DNS) **antes de cada entrega**, para o webhook não poder alcançar
+endereços internos (guarda SSRF).
+
+Defina **`allowInternal: true`** (a escolha **Internal** no formulário) para
+entregar a um endereço privado/loopback — ex.: outro serviço na **mesma rede
+Docker ou LAN**, como um n8n local. Isso relaxa a guarda só para faixas
+privadas/loopback.
+
+:::caution[Sempre bloqueados]
+**Endereços de cloud-metadata e link-local continuam bloqueados
+incondicionalmente**, mesmo com `allowInternal: true`. Para destinos públicos,
+mantenha `false` e use uma URL HTTPS acessível.
 :::

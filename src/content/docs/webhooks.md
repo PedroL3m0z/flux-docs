@@ -19,7 +19,9 @@ it to your endpoint with retries and an HMAC signature.
 1. **Webhooks → Add webhook**.
 2. Set a **name** and your **URL**, tick the **event types**, link the
    **instances** to listen on.
-3. **Create** — the signing **secret** is shown **once**; copy it now.
+3. Pick the **target scope** — **External** (public internet, default) or
+   **Internal** (a private/loopback address on the same network).
+4. **Create** — the signing **secret** is shown **once**; copy it now.
 
 ### Via the API
 
@@ -31,6 +33,7 @@ it to your endpoint with retries and an HMAC signature.
 | `url` | string | yes | valid URL | Where deliveries are POSTed |
 | `events` | string[] | yes | non-empty; each a valid [event type](/flux-docs/events/) | Which events to send |
 | `instanceIds` | string[] | no | instance ids | Instances to listen on (link later if omitted) |
+| `allowInternal` | boolean | no | default `false` | Allow a **private/loopback** target (same Docker network / LAN) — see [Target scope](#target-scope-external-vs-internal) |
 
 ```json
 // POST /webhooks
@@ -38,7 +41,8 @@ it to your endpoint with retries and an HMAC signature.
   "name": "My integration",
   "url": "https://example.com/hooks/flux",
   "events": ["message.new", "message.read"],
-  "instanceIds": ["<instanceId>"]
+  "instanceIds": ["<instanceId>"],
+  "allowInternal": false
 }
 ```
 
@@ -89,8 +93,10 @@ function verify(rawBody: string, header: string, secret: string): boolean {
 
 - **Durable** — every attempt is stored, surviving restarts.
 - **Retried with backoff** — `10s → 1m → 5m → 30m → 2h`; after **6 attempts** a
-  delivery is marked `dead`.
-- **Auditable** — inspect the log and re-send manually.
+  delivery is marked `dead`. Each record exposes `nextAttemptAt`.
+- **Auditable** — every delivery captures the target's **response body** (a
+  truncated snippet, up to 2000 chars) and the last error; inspect the log and
+  re-send manually.
 
 ## Manage
 
@@ -100,7 +106,8 @@ function verify(rawBody: string, header: string, secret: string): boolean {
 
 Each row: toggle **active**, view **deliveries**, **rotate secret**, **edit**,
 **delete**. The deliveries log shows status, HTTP code and attempts, with a manual
-resend:
+resend; a failed delivery auto-expands a detail panel with the **error**, the
+target's **response body** and the **next-attempt time**:
 
 ![Webhook deliveries modal, annotated](../../assets/screenshots/webhook-deliveries-annotated.png)
 
@@ -126,9 +133,21 @@ resend:
 | `url` | string | valid URL | Change the endpoint |
 | `active` | boolean | — | Enable/disable delivery |
 | `events` | string[] | valid event types | Replace the subscription |
+| `allowInternal` | boolean | — | Toggle private/loopback targets (see below) |
 
-:::caution[Public URLs only]
-URLs pointing at localhost, private/reserved IP ranges or cloud metadata are
-rejected on create/update, and re-checked (with DNS resolution) before each
-delivery. Use a publicly reachable HTTPS URL.
+## Target scope (External vs Internal)
+
+By default a webhook is **External**: URLs pointing at localhost, private or
+reserved IP ranges are **rejected** on create/update and re-checked (with DNS
+resolution) **before every delivery**, so a webhook can't be used to reach
+internal addresses (SSRF guard).
+
+Set **`allowInternal: true`** (the **Internal** choice in the form) to deliver to
+a private/loopback address — e.g. another service on the **same Docker network or
+LAN**, like a local n8n. This relaxes the guard for private/loopback ranges only.
+
+:::caution[Always blocked]
+**Cloud-metadata and link-local addresses stay blocked unconditionally**, even
+with `allowInternal: true`. For public targets, keep it `false` and use a
+reachable HTTPS URL.
 :::
