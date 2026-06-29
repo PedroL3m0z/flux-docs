@@ -2,11 +2,12 @@
 import { defineConfig, passthroughImageService } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
-// Project site on GitHub Pages → https://pedrol3m0z.github.io/flux-docs/
-// `site` + `base` must match the repo name so internal links resolve.
+// Project site on GitHub Pages → https://pedrol3m0z.github.io/Flux-Docs/
+// `site` + `base` must match the repo name exactly (case-sensitive) so asset
+// links resolve. Repo is `Flux-Docs`, so `base` must keep that capitalization.
 export default defineConfig({
   site: 'https://pedrol3m0z.github.io',
-  base: '/flux-docs',
+  base: '/Flux-Docs',
   // Skip Sharp's native image pipeline: it ships an unsigned .node binary that
   // Windows Smart App Control blocks, breaking local builds. The docs use only
   // a couple of static images, so passthrough is fine; CI (Linux) is unaffected.
